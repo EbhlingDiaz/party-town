@@ -1,8 +1,13 @@
 require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   setup do
-    @event = events(:one)
+    @event = FactoryGirl.create(:event)
+    @user   = FactoryGirl.create(:user)
+    @user.confirm!
+    sign_in @user
   end
 
   test "should get index" do
@@ -16,14 +21,6 @@ class EventsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create event" do
-    assert_difference('Event.count') do
-      post :create, event: { address_line_1: @event.address_line_1, address_line_2: @event.address_line_2, city: @event.city, latitude: @event.latitude, longitude: @event.longitude, title: @event.title, when: @event.when }
-    end
-
-    assert_redirected_to event_path(assigns(:event))
-  end
-
   test "should show event" do
     get :show, id: @event
     assert_response :success
@@ -35,7 +32,16 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test "should update event" do
-    put :update, id: @event, event: { address_line_1: @event.address_line_1, address_line_2: @event.address_line_2, city: @event.city, latitude: @event.latitude, longitude: @event.longitude, title: @event.title, when: @event.when }
+    put :update, id: @event, event: {
+      address_line_1: @event.address_line_1,
+      address_line_2: @event.address_line_2,
+      city:           @event.city,
+      latitude:       @event.latitude,
+      longitude:      @event.longitude,
+      title:          @event.title,
+      when:           @event.when,
+      hashtag:        @event.hashtag
+    }
     assert_redirected_to event_path(assigns(:event))
   end
 

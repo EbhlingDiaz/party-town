@@ -8,6 +8,7 @@ one:
   latitude: 1.5
   longitude: 1.5
   when: 2012-05-19 12:27:39
+  hashtag: "#one"
 
 two:
   title: MyString
@@ -17,3 +18,4 @@ two:
   latitude: 1.5
   longitude: 1.5
   when: 2012-05-19 12:27:39
+  hashtag: "#two"
